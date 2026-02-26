@@ -1,4 +1,4 @@
-package org.univ_paris8.iut.montreuil.qdev.tp202x.grX;
+package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
