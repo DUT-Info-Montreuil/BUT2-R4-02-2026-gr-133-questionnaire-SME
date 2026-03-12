@@ -1,4 +1,4 @@
-package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dtos;
+package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,6 @@ public class QuestionnaireDTO {
         this.titre = titre;
         this.listeCompleteQuestions = listeCompleteQuestions;
     }
-
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

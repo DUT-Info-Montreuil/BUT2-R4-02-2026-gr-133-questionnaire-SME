@@ -1,4 +1,4 @@
-package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dtos;
+package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dto;
 
 public class QuestionDTO {
 
@@ -25,7 +25,6 @@ public class QuestionDTO {
         this.reference = reference;
         this.langue = langue;
     }
-
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

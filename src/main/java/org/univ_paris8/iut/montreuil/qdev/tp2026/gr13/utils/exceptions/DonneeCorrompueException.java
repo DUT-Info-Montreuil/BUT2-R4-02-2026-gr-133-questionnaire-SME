@@ -1,4 +1,4 @@
-package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.utils.exeptions;
+package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.utils.exceptions;
 
 public class DonneeCorrompueException extends Exception {
 
