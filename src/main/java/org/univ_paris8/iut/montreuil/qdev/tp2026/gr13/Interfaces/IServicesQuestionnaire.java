@@ -4,7 +4,7 @@ import org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dtos.Questionnaire
 
 import java.util.ArrayList;
 
-public interface IServicesQuizz {
+public interface IServicesQuestionnaire {
 
     public ArrayList<QuestionnaireDTO> chargerQuestionnaires(String chemin);
 

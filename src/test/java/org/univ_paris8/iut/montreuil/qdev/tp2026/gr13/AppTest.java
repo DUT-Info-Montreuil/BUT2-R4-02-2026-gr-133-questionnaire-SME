@@ -1,5 +1,6 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
