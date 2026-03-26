@@ -38,9 +38,9 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
                     continue;
                 }
 
-                String[] colonnes = ligne.split("\t");
+                String[] colonnes = ligne.split("\t", -1);
                 if (colonnes.length != 9) {
-                    colonnes = ligne.split(";");
+                    colonnes = ligne.split(";", -1);
                 }
                 if (colonnes.length != 9) {
                     throw new DonneeCorrompueException(

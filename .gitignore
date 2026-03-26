@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Fichiers projet exclus ###
+*.md
+*.csv
