@@ -1,6 +1,6 @@
-package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.dto;
+package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.entites.bo;
 
-public class QuestionDTO {
+public class QuestionBO {
 
     private int idQuestionnaire;
     private int numQuestion;
@@ -9,12 +9,14 @@ public class QuestionDTO {
     private int difficulte;
     private String explication;
     private String reference;
+    private int nbFoisPosee;
+    private int nbBonnesReponses;
 
-    public QuestionDTO() {
+    public QuestionBO() {
     }
 
-    public QuestionDTO(int idQuestionnaire, int numQuestion, String libelleQuestion,
-                       String reponse, int difficulte, String explication, String reference) {
+    public QuestionBO(int idQuestionnaire, int numQuestion, String libelleQuestion,
+                      String reponse, int difficulte, String explication, String reference) {
         this.idQuestionnaire = idQuestionnaire;
         this.numQuestion = numQuestion;
         this.libelleQuestion = libelleQuestion;
@@ -22,6 +24,8 @@ public class QuestionDTO {
         this.difficulte = difficulte;
         this.explication = explication;
         this.reference = reference;
+        this.nbFoisPosee = 0;
+        this.nbBonnesReponses = 0;
     }
 
     public int getIdQuestionnaire() { return idQuestionnaire; }
@@ -44,4 +48,10 @@ public class QuestionDTO {
 
     public String getReference() { return reference; }
     public void setReference(String reference) { this.reference = reference; }
+
+    public int getNbFoisPosee() { return nbFoisPosee; }
+    public void setNbFoisPosee(int nbFoisPosee) { this.nbFoisPosee = nbFoisPosee; }
+
+    public int getNbBonnesReponses() { return nbBonnesReponses; }
+    public void setNbBonnesReponses(int nbBonnesReponses) { this.nbBonnesReponses = nbBonnesReponses; }
 }

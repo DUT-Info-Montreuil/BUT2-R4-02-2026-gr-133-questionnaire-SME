@@ -5,28 +5,48 @@ import java.util.List;
 
 public class QuestionnaireDTO {
 
-    private int id;
-    private String titre;
-    private List<QuestionDTO> listeCompleteQuestions;
+    private int idQuestionnaire;
+    private String libelleQuestionnaire;
+    private String langue;
+    private List<QuestionDTO> questions;
+    private int nbQuestionsSimples;
+    private int nbQuestionsIntermediaires;
+    private int nbQuestionsExpertes;
 
     public QuestionnaireDTO() {
-        this.listeCompleteQuestions = new ArrayList<>();
+        this.questions = new ArrayList<>();
     }
 
-    public QuestionnaireDTO(int id, String titre, List<QuestionDTO> listeCompleteQuestions) {
-        this.id = id;
-        this.titre = titre;
-        this.listeCompleteQuestions = listeCompleteQuestions;
+    public QuestionnaireDTO(int idQuestionnaire, String libelleQuestionnaire, String langue,
+                            List<QuestionDTO> questions, int nbQuestionsSimples,
+                            int nbQuestionsIntermediaires, int nbQuestionsExpertes) {
+        this.idQuestionnaire = idQuestionnaire;
+        this.libelleQuestionnaire = libelleQuestionnaire;
+        this.langue = langue;
+        this.questions = questions;
+        this.nbQuestionsSimples = nbQuestionsSimples;
+        this.nbQuestionsIntermediaires = nbQuestionsIntermediaires;
+        this.nbQuestionsExpertes = nbQuestionsExpertes;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getIdQuestionnaire() { return idQuestionnaire; }
+    public void setIdQuestionnaire(int idQuestionnaire) { this.idQuestionnaire = idQuestionnaire; }
 
-    public String getTitre() { return titre; }
-    public void setTitre(String titre) { this.titre = titre; }
+    public String getLibelleQuestionnaire() { return libelleQuestionnaire; }
+    public void setLibelleQuestionnaire(String libelleQuestionnaire) { this.libelleQuestionnaire = libelleQuestionnaire; }
 
-    public List<QuestionDTO> getListeCompleteQuestions() { return listeCompleteQuestions; }
-    public void setListeCompleteQuestions(List<QuestionDTO> listeCompleteQuestions) {
-        this.listeCompleteQuestions = listeCompleteQuestions;
-    }
+    public String getLangue() { return langue; }
+    public void setLangue(String langue) { this.langue = langue; }
+
+    public List<QuestionDTO> getQuestions() { return questions; }
+    public void setQuestions(List<QuestionDTO> questions) { this.questions = questions; }
+
+    public int getNbQuestionsSimples() { return nbQuestionsSimples; }
+    public void setNbQuestionsSimples(int nbQuestionsSimples) { this.nbQuestionsSimples = nbQuestionsSimples; }
+
+    public int getNbQuestionsIntermediaires() { return nbQuestionsIntermediaires; }
+    public void setNbQuestionsIntermediaires(int nbQuestionsIntermediaires) { this.nbQuestionsIntermediaires = nbQuestionsIntermediaires; }
+
+    public int getNbQuestionsExpertes() { return nbQuestionsExpertes; }
+    public void setNbQuestionsExpertes(int nbQuestionsExpertes) { this.nbQuestionsExpertes = nbQuestionsExpertes; }
 }
