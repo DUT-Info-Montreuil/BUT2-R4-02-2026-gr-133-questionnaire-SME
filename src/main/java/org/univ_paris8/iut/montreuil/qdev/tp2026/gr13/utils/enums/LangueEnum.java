@@ -2,7 +2,11 @@ package org.univ_paris8.iut.montreuil.qdev.tp2026.gr13.utils.enums;
 
 public enum LangueEnum {
 
-    FR("fr");
+    FR("fr"),
+    EN("en"),
+    DE("de"),
+    ES("es"),
+    IT("it");
 
     private final String code;
 

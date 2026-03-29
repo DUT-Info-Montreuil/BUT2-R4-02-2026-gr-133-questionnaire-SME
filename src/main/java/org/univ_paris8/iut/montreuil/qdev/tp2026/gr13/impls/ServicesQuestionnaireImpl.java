@@ -19,15 +19,16 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
     private List<QuestionnaireBO> questionnairesBO = new ArrayList<>();
 
     @Override
-    public List<QuestionnaireDTO> chargerQuestionnaires(String chemin)
-            throws CsvInexistantException, DonneeCorrompueException {
+    public List<QuestionnaireDTO> chargerFichier(String cheminFichier)
+            throws FichierIntrouvableException, FichierCorrompuException {
 
-        File fichier = new File(chemin);
+        File fichier = new File(cheminFichier);
         if (!fichier.exists()) {
-            throw new CsvInexistantException("Le fichier CSV est introuvable : " + chemin);
+            throw new FichierIntrouvableException("Le fichier CSV est introuvable : " + cheminFichier);
         }
 
         Map<Integer, QuestionnaireBO> mapQuestionnaires = new LinkedHashMap<>();
+        boolean auMoinsUneLigne = false;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fichier))) {
             String ligne;
@@ -37,13 +38,14 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
                 if (ligne.trim().isEmpty()) {
                     continue;
                 }
+                auMoinsUneLigne = true;
 
                 String[] colonnes = ligne.split("\t", -1);
                 if (colonnes.length != 9) {
                     colonnes = ligne.split(";", -1);
                 }
                 if (colonnes.length != 9) {
-                    throw new DonneeCorrompueException(
+                    throw new FichierCorrompuException(
                             "Ligne " + numLigne + " : attendu 9 colonnes, trouvé " + colonnes.length);
                 }
 
@@ -55,8 +57,13 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
                     numQuestion = Integer.parseInt(colonnes[2].trim());
                     difficulte = Integer.parseInt(colonnes[6].trim());
                 } catch (NumberFormatException e) {
-                    throw new DonneeCorrompueException(
+                    throw new FichierCorrompuException(
                             "Ligne " + numLigne + " : valeur numérique invalide", e);
+                }
+
+                if (difficulte < 1 || difficulte > 3) {
+                    throw new FichierCorrompuException(
+                            "Ligne " + numLigne + " : difficulté invalide (" + difficulte + "), attendu 1, 2 ou 3");
                 }
 
                 String libelleQuestionnaire = colonnes[1].trim();
@@ -80,7 +87,11 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
                 mapQuestionnaires.get(idQuestionnaire).getQuestions().add(questionBO);
             }
         } catch (IOException e) {
-            throw new DonneeCorrompueException("Erreur lors de la lecture du fichier : " + chemin, e);
+            throw new FichierCorrompuException("Erreur lors de la lecture du fichier : " + cheminFichier, e);
+        }
+
+        if (!auMoinsUneLigne) {
+            throw new FichierCorrompuException("Le fichier est vide : " + cheminFichier);
         }
 
         questionnairesBO = new ArrayList<>(mapQuestionnaires.values());
@@ -106,41 +117,19 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
 
     @Override
     public QuestionnaireDTO fournirUnQuestionnaire(int idQuestionnaire)
-            throws QuestionnaireInexistantException {
+            throws QuestionnaireIntrouvableException {
         for (QuestionnaireBO bo : questionnairesBO) {
             if (bo.getIdQuestionnaire() == idQuestionnaire) {
                 return convertirQuestionnaireBoEnDto(bo);
             }
         }
-        throw new QuestionnaireInexistantException(
+        throw new QuestionnaireIntrouvableException(
                 "Aucun questionnaire trouvé avec l'id : " + idQuestionnaire);
     }
 
     @Override
-    public List<QuestionDTO> obtenirQuestionsAleatoires(QuestionnaireDTO questionnaire)
-            throws NombreDeQuestionsInsuffisantException {
-        List<QuestionDTO> toutesQuestions = questionnaire.getQuestions();
-        if (toutesQuestions.size() < 10) {
-            throw new NombreDeQuestionsInsuffisantException(
-                    "Le questionnaire contient seulement " + toutesQuestions.size()
-                            + " questions, il en faut au minimum 10.");
-        }
-        List<QuestionDTO> copie = new ArrayList<>(toutesQuestions);
-        Collections.shuffle(copie);
-        return copie.subList(0, 10);
-    }
-
-    @Override
-    public boolean verifierReponse(String reponseUtilisateur, QuestionDTO questionActive) {
-        if (reponseUtilisateur == null || questionActive.getReponse() == null) {
-            return false;
-        }
-        return reponseUtilisateur.trim().equalsIgnoreCase(questionActive.getReponse().trim());
-    }
-
-    @Override
     public void majStatQuestions(int idQuestionnaire, Map<Integer, Boolean> resultats)
-            throws QuestionnaireInexistantException, DonneesInvalidesException {
+            throws QuestionnaireIntrouvableException, DonneesInvalidesException {
         if (resultats == null || resultats.isEmpty()) {
             throw new DonneesInvalidesException("Les résultats ne peuvent pas être null ou vides.");
         }
@@ -166,7 +155,7 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
 
     @Override
     public StatistiqueQuestionnaireDTO fournirStatsQuestions(int idQuestionnaire)
-            throws QuestionnaireInexistantException, AucunePartieJoueeException {
+            throws QuestionnaireIntrouvableException, AucunePartieJoueeException {
 
         QuestionnaireBO questionnaire = trouverQuestionnaireBO(idQuestionnaire);
 
@@ -216,13 +205,13 @@ public class ServicesQuestionnaireImpl implements IServicesQuestionnaire {
     // --- Méthodes utilitaires privées ---
 
     private QuestionnaireBO trouverQuestionnaireBO(int idQuestionnaire)
-            throws QuestionnaireInexistantException {
+            throws QuestionnaireIntrouvableException {
         for (QuestionnaireBO bo : questionnairesBO) {
             if (bo.getIdQuestionnaire() == idQuestionnaire) {
                 return bo;
             }
         }
-        throw new QuestionnaireInexistantException(
+        throw new QuestionnaireIntrouvableException(
                 "Aucun questionnaire trouvé avec l'id : " + idQuestionnaire);
     }
 
