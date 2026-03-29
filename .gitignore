@@ -40,3 +40,4 @@ build/
 ### Fichiers projet exclus ###
 *.md
 *.csv
+!src/test/resources/questionsQuizz_test*.csv
