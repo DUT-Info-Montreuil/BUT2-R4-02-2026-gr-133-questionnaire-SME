@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cut -d';' -f4 \"C:/Users/younes/IdeaProjects/15+/questionsQuizz_2025_V1.csv\")"
+    ]
+  }
+}
